@@ -34,18 +34,6 @@ resource "google_project_iam_binding" "service_permissions" {
   depends_on = [google_service_account.service_account]
 }
 
-resource "google_datastore_index" "default" {
-  kind = "test"
-  properties {
-    name = "property_a"
-    direction = "ASCENDING"
-  }
-  properties {
-    name = "property_b"
-    direction = "ASCENDING"
-  }
-}
-
 resource "google_cloud_run_service" "default" {
   name     = "go-pets"
   location = var.region
