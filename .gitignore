@@ -1,0 +1,6 @@
+tmp/
+*.out
+*.iml
+go-pet
+terraform/.terraform*
+/.idea/
