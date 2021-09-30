@@ -1,0 +1,20 @@
+name: CD
+on:
+  push:
+    bransches:
+      - master
+
+  workflow_dispatch:
+
+jobs:
+  cd:
+    name: CD
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        env:
+          PROJECT_ID: roi-takeoff-user17
+          APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      - name: TEST
+        run: ./install.sh
