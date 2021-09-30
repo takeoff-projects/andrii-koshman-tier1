@@ -42,7 +42,7 @@ resource "google_cloud_run_service" "default" {
     spec {
       service_account_name = google_service_account.service_account.email
       containers {
-        image = "gcr.io/roi-takeoff-user17/go-pets:${var.app_version}"
+        image = "gcr.io/${var.project}/go-pets/go-pets-image:${var.app_version}"
         env {
           name  = "GOOGLE_CLOUD_PROJECT"
           value = var.project
