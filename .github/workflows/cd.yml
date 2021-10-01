@@ -13,13 +13,18 @@ jobs:
     env:
       GOOGLE_CLOUD_PROJECT: ${{ secrets.GOOGLE_CLOUD_PROJECT }}
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
-      - uses: actions/checkout@v2
-      - name: CI-CD
+      - name: Build the app
+        run: gcloud builds submit --tag=gcr.io/${{ secrets.GOOGLE_CLOUD_PROJECT }}/go-pets/go-pets-image .  --project ${{ secrets.GOOGLE_CLOUD_PROJECT }}
+      - name: Terraform run
         run: |
-            chmod +x gitactions.sh
-            ./gitactions.sh
+            cd terraform &&
+            terraform init -reconfigure <<< ${{ secrets.TRF_STATE_BUCKET }} &&
+            terraform apply -auto-approve
